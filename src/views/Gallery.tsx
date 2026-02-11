@@ -8,14 +8,14 @@ export default function Gallery() {
   const [isFullscreenOpen, setIsFullscreenOpen] = useState(false)
 
   const images = [
-    { src: '/src/assets/img/comidas/confeitaria/bolodepote/BOLO DE POTE 2 AMORES.jpg', alt: 'Bolo de Pote - Promoção' },
-    { src: '/src/assets/img/comidas/confeitaria/donuts/Bread King Café Julho 2025 Ebraim Martini-747.jpg', alt: 'Donuts - Oferta Especial' },
-    { src: '/src/assets/img/comidas/padaria/Bread King Julho 2025 Ebraim Martini-392.jpg', alt: 'Pães Artesanais - Promoção' },
-    { src: '/src/assets/img/comidas/pizza/calabresa (16).jpg', alt: 'Pizza - Oferta' },
-    { src: '/src/assets/img/comidas/salgados/Bread King Agosto 2025 Ebraim Martini-363.jpg', alt: 'Salgados - Combo Promoção' },
-    { src: '/src/assets/img/comidas/confeitaria/tortastradicionais/Bread King Setembro 2025 Ebraim Martini-497.jpg', alt: 'Tortas - Desconto Especial' },
-    { src: '/src/assets/img/comidas/sopas/Bread King maio 2025 Ebraim Martini-232.jpg', alt: 'Sopas - Promoção de Inverno' },
-    { src: '/src/assets/img/comidas/confeitaria/mousse/Bread King Setembro 2025 Ebraim Martini-483.jpg', alt: 'Mousse - Oferta' },
+    { src: '/src/assets/optimized/BOLO DE POTE 2 AMORES.webp', alt: 'Bolo de Pote - Promoção' },
+    { src: '/src/assets/optimized/Bread King Café Julho 2025 Ebraim Martini-747.webp', alt: 'Donuts - Oferta Especial' },
+    { src: '/src/assets/optimized/Bread King Julho 2025 Ebraim Martini-392.webp', alt: 'Pães Artesanais - Promoção' },
+    { src: '/src/assets/optimized/calabresa (16).webp', alt: 'Pizza - Oferta' },
+    { src: '/src/assets/optimized/Bread King Agosto 2025 Ebraim Martini-363.webp', alt: 'Salgados - Combo Promoção' },
+    { src: '/src/assets/optimized/Bread King Setembro 2025 Ebraim Martini-497.webp', alt: 'Tortas - Desconto Especial' },
+    { src: '/src/assets/optimized/Bread King maio 2025 Ebraim Martini-232.webp', alt: 'Sopas - Promoção de Inverno' },
+    { src: '/src/assets/optimized/Bread King Setembro 2025 Ebraim Martini-483.webp', alt: 'Mousse - Oferta' },
   ]
 
   const activeItem = images[activeIndex] ?? images[0]
