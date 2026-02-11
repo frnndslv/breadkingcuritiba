@@ -8,14 +8,14 @@ export default function Gallery() {
   const [isFullscreenOpen, setIsFullscreenOpen] = useState(false)
 
   const images = [
-    { src: '/src/assets/optimized/BOLO DE POTE 2 AMORES.webp', alt: 'Bolo de Pote - Promoção' },
-    { src: '/src/assets/optimized/Bread King Café Julho 2025 Ebraim Martini-747.webp', alt: 'Donuts - Oferta Especial' },
-    { src: '/src/assets/optimized/Bread King Julho 2025 Ebraim Martini-392.webp', alt: 'Pães Artesanais - Promoção' },
-    { src: '/src/assets/optimized/calabresa (16).webp', alt: 'Pizza - Oferta' },
-    { src: '/src/assets/optimized/Bread King Agosto 2025 Ebraim Martini-363.webp', alt: 'Salgados - Combo Promoção' },
-    { src: '/src/assets/optimized/Bread King Setembro 2025 Ebraim Martini-497.webp', alt: 'Tortas - Desconto Especial' },
-    { src: '/src/assets/optimized/Bread King maio 2025 Ebraim Martini-232.webp', alt: 'Sopas - Promoção de Inverno' },
-    { src: '/src/assets/optimized/Bread King Setembro 2025 Ebraim Martini-483.webp', alt: 'Mousse - Oferta' },
+    { src: '/images/BOLO DE POTE 2 AMORES.webp', alt: 'Bolo de Pote - Promoção' },
+    { src: '/images/Bread King Café Julho 2025 Ebraim Martini-747.webp', alt: 'Donuts - Oferta Especial' },
+    { src: '/images/Bread King Julho 2025 Ebraim Martini-392.webp', alt: 'Pães Artesanais - Promoção' },
+    { src: '/images/calabresa (16).webp', alt: 'Pizza - Oferta' },
+    { src: '/images/Bread King Agosto 2025 Ebraim Martini-363.webp', alt: 'Salgados - Combo Promoção' },
+    { src: '/images/Bread King Setembro 2025 Ebraim Martini-497.webp', alt: 'Tortas - Desconto Especial' },
+    { src: '/images/Bread King maio 2025 Ebraim Martini-232.webp', alt: 'Sopas - Promoção de Inverno' },
+    { src: '/images/Bread King Setembro 2025 Ebraim Martini-483.webp', alt: 'Mousse - Oferta' },
   ]
 
   const activeItem = images[activeIndex] ?? images[0]

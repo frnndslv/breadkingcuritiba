@@ -8,17 +8,17 @@ export default function Stores() {
     { 
       name: 'Batel', 
       address: 'Rua exemplo, 1400',
-      image: '/src/assets/optimized/imgLoja1.webp'
+      image: '/images/imgLoja1.webp'
     },
     { 
       name: 'Jardim Social', 
       address: 'Rua exemplo, 980',
-      image: '/src/assets/optimized/IMG-20260112-WA0110.webp'
+      image: '/images/IMG-20260112-WA0110.webp'
     },
     { 
       name: 'Bom Retiro', 
       address: 'Rua exemplo, 340',
-      image: '/src/assets/optimized/imgLoja1.webp'
+      image: '/images/imgLoja1.webp'
     },
   ]
 

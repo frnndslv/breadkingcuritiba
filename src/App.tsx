@@ -45,7 +45,7 @@ function App() {
         >
           <div className="bk-header">
             <div className="bk-brand">
-              <img src="/src/assets/optimized/logomarcaSemFundo.webp" alt="Bread King" style={{ height: '100px' }} />
+              <img src="/images/logomarcaSemFundo.webp" alt="Bread King" style={{ height: '100px' }} />
             </div>
             <Menu
               mode="horizontal"
