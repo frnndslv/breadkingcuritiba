@@ -1,5 +1,5 @@
 import { WhatsAppOutlined } from '@ant-design/icons'
-import { Row, Col, Card, Typography, Button, Space, Select } from 'antd'
+import { Row, Col, Card, Typography, Button, Space } from 'antd'
 
 const { Title, Text } = Typography
 
@@ -16,38 +16,14 @@ export default function Contact() {
         >
           Entre em Contato
         </Title>
-        <Row gutter={[24, 24]} style={{ marginTop: 32 }}>
+        <Row gutter={[24, 24]} justify="center" style={{ marginTop: 32 }}>
           <Col xs={24} md={12}>
             <Card style={{ borderRadius: 12, height: '100%' }}>
-              <Title level={4}>Contato para Pedidos</Title>
-              <Text>Duvidas sobre pedidos, produtos e unidades.</Text>
-               <Select
-                placeholder="Selecione a filial"
-                style={{ width: '100%', marginTop: 12 }}
-                options={[
-                  { value: 'batel', label: 'Loja Batel' },
-                  { value: 'jardim-social', label: 'Loja Jardim Social' },
-                  { value: 'bom-retiro', label: 'Loja Bom Retiro' },
-                ]}
-              />
-              <Space style={{ marginTop: 16 }}>
-                <Button type="primary" icon={<WhatsAppOutlined />}>Quero pedir agora</Button>
-              </Space>
-            </Card>
-          </Col>
-          <Col xs={24} md={12}>
-            <Card style={{ borderRadius: 12, height: '100%' }}>
-              <Title level={4}>Contato Comercial</Title>
-              <Text>Solicite proposta para revenda, cafeterias e empresas.</Text>
-              <Select
-                placeholder="Selecione a filial"
-                style={{ width: '100%', marginTop: 12 }}
-                options={[
-                  { value: 'batel', label: 'Loja Batel' },
-                  { value: 'jardim-social', label: 'Loja Jardim Social' },
-                  { value: 'bom-retiro', label: 'Loja Bom Retiro' },
-                ]}
-              />
+              <Title level={4}>Quer se tornar um parceiro?</Title>
+              <Text>Entre em contato com nosso time B2B e conheça todos os produtos da nossa linha</Text>
+              <div>
+
+              </div>
               <Space style={{ marginTop: 16 }}>
                 <Button type="primary" icon={<WhatsAppOutlined />}>Falar com o comercial</Button>
               </Space>

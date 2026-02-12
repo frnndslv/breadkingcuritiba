@@ -64,17 +64,17 @@ function App() {
               <Menu.Item key="home" onClick={() => scrollToSection('home')}>
                 Inicio
               </Menu.Item>
-              <Menu.Item key="services" onClick={() => scrollToSection('services')}>
-                Produtos
+              <Menu.Item key="about" onClick={() => scrollToSection('about')}>
+                Sobre
               </Menu.Item>
               <Menu.Item key="stores" onClick={() => scrollToSection('stores')}>
                 Lojas
               </Menu.Item>
-              <Menu.Item key="about" onClick={() => scrollToSection('about')}>
-                Sobre
+              <Menu.Item key="services" onClick={() => scrollToSection('services')}>
+                Produtos
               </Menu.Item>
               <Menu.Item key="gallery" onClick={() => scrollToSection('gallery')}>
-                Promoções
+                Novidades
               </Menu.Item>
               <Menu.Item key="contact" onClick={() => scrollToSection('contact')}>
                 Contato
@@ -86,13 +86,12 @@ function App() {
         <Content style={{ marginTop: 90 }}>
           <Hero
             onReserveClick={() => scrollToSection('contact')}
-            onServicesClick={() => scrollToSection('stores')}
           />
-          <Services />
+          <About />
           <WaveDivider color="#fff7eb" backgroundColor="#fff" flip />
           <Stores />
           <WaveDivider color="#ffffff" backgroundColor="#fff7eb" />
-          <About />
+          <Services />
           <WaveDivider color="#fff7eb" backgroundColor="#ffffff" flip />
           <Gallery />
           <WaveDivider color="#ffffff" backgroundColor="#fff7eb" />

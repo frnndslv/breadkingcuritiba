@@ -5,10 +5,12 @@ const { Title, Paragraph } = Typography
 
 interface HeroProps {
   onReserveClick: () => void
-  onServicesClick: () => void
 }
 
-export default function Hero({ onReserveClick, onServicesClick }: HeroProps) {
+export default function Hero({ onReserveClick }: HeroProps) {
+  const b2bMessage = 'Olá, desejo conhecer mais sobre os produtos da bread king (B2B)'
+  const b2bWhatsappUrl = `https://wa.me/5541985268755?text=${encodeURIComponent(b2bMessage)}`
+
   return (
     <section
       id="home"
@@ -58,7 +60,7 @@ export default function Hero({ onReserveClick, onServicesClick }: HeroProps) {
             padding: '0 10px',
           }}
         >
-          Bread King
+          
         </Paragraph>
         <Space size="large" wrap style={{ justifyContent: 'center' }}>
           <Button
@@ -87,7 +89,9 @@ export default function Hero({ onReserveClick, onServicesClick }: HeroProps) {
               borderColor: '#D69A2D',
               color: '#D69A2D',
             }}
-            onClick={onServicesClick}
+            href={b2bWhatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
           >
             Sou empresa / Revenda
           </Button>
