@@ -1,22 +1,89 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Row, Col, Typography, Card } from 'antd'
 
 const { Title, Paragraph } = Typography
 
+type GalleryImage = {
+  src: string
+  alt: string
+}
+
+type GoogleDriveFile = {
+  id: string
+  name: string
+  mimeType: string
+}
+
+type GoogleDriveResponse = {
+  files?: GoogleDriveFile[]
+}
+
+const FALLBACK_IMAGES: GalleryImage[] = [
+  { src: '/images/BOLO DE POTE 2 AMORES.webp', alt: 'Bolo de Pote - Promoção' },
+  { src: '/images/Bread King Café Julho 2025 Ebraim Martini-747.webp', alt: 'Donuts - Oferta Especial' },
+  { src: '/images/Bread King Julho 2025 Ebraim Martini-392.webp', alt: 'Pães Artesanais - Promoção' },
+  { src: '/images/calabresa (16).webp', alt: 'Pizza - Oferta' },
+  { src: '/images/Bread King Agosto 2025 Ebraim Martini-363.webp', alt: 'Salgados - Combo Promoção' },
+  { src: '/images/Bread King Setembro 2025 Ebraim Martini-497.webp', alt: 'Tortas - Desconto Especial' },
+  { src: '/images/Bread King maio 2025 Ebraim Martini-232.webp', alt: 'Sopas - Promoção de Inverno' },
+  { src: '/images/Bread King Setembro 2025 Ebraim Martini-483.webp', alt: 'Mousse - Oferta' },
+]
+
+const GOOGLE_DRIVE_FOLDER_ID = import.meta.env.VITE_GDRIVE_FOLDER_ID || '1B2bV2a_oKNxSVTe5XHIZQfhIURQWJlKt'
+const GOOGLE_DRIVE_API_KEY = import.meta.env.VITE_GDRIVE_API_KEY || ''
+
 export default function Gallery() {
   const [activeIndex, setActiveIndex] = useState(0)
   const [isFullscreenOpen, setIsFullscreenOpen] = useState(false)
+  const [images, setImages] = useState<GalleryImage[]>(FALLBACK_IMAGES)
 
-  const images = [
-    { src: '/images/BOLO DE POTE 2 AMORES.webp', alt: 'Bolo de Pote - Promoção' },
-    { src: '/images/Bread King Café Julho 2025 Ebraim Martini-747.webp', alt: 'Donuts - Oferta Especial' },
-    { src: '/images/Bread King Julho 2025 Ebraim Martini-392.webp', alt: 'Pães Artesanais - Promoção' },
-    { src: '/images/calabresa (16).webp', alt: 'Pizza - Oferta' },
-    { src: '/images/Bread King Agosto 2025 Ebraim Martini-363.webp', alt: 'Salgados - Combo Promoção' },
-    { src: '/images/Bread King Setembro 2025 Ebraim Martini-497.webp', alt: 'Tortas - Desconto Especial' },
-    { src: '/images/Bread King maio 2025 Ebraim Martini-232.webp', alt: 'Sopas - Promoção de Inverno' },
-    { src: '/images/Bread King Setembro 2025 Ebraim Martini-483.webp', alt: 'Mousse - Oferta' },
-  ]
+  useEffect(() => {
+    if (!GOOGLE_DRIVE_API_KEY) {
+      return
+    }
+
+    const abortController = new AbortController()
+
+    const query = encodeURIComponent(
+      `'${GOOGLE_DRIVE_FOLDER_ID}' in parents and trashed=false and mimeType contains 'image/'`,
+    )
+    const requestUrl = `https://www.googleapis.com/drive/v3/files?q=${query}&fields=files(id,name,mimeType)&key=${GOOGLE_DRIVE_API_KEY}`
+
+    void fetch(requestUrl, { signal: abortController.signal })
+      .then(async (response) => {
+        if (!response.ok) {
+          throw new Error(`Google Drive API error ${response.status}`)
+        }
+
+        return response.json() as Promise<GoogleDriveResponse>
+      })
+      .then((payload) => {
+        const driveImages = (payload.files ?? [])
+          .filter((file) => !!file.id)
+          .sort((left, right) => left.name.localeCompare(right.name, undefined, { numeric: true }))
+          .map((file) => ({
+            src: `https://drive.google.com/thumbnail?id=${file.id}&sz=w1600`,
+            alt: file.name,
+          }))
+
+        if (driveImages.length > 0) {
+          setImages(driveImages)
+          setActiveIndex(0)
+        }
+      })
+      .catch((error: unknown) => {
+        if (error instanceof Error && error.name === 'AbortError') {
+          return
+        }
+
+        console.error('Não foi possível carregar imagens do Google Drive:', error)
+      })
+      .finally(() => undefined)
+
+    return () => {
+      abortController.abort()
+    }
+  }, [])
 
   const activeItem = images[activeIndex] ?? images[0]
 

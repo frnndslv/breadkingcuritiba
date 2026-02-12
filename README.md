@@ -71,3 +71,14 @@ export default defineConfig([
   },
 ])
 ```
+
+## Gallery via Google Drive
+
+The `Novidades` section can load images directly from a Google Drive folder.
+
+1. Create a `.env` file from `.env.example`.
+2. Fill in `VITE_GDRIVE_API_KEY` with your Google Drive API key.
+3. Keep `VITE_GDRIVE_FOLDER_ID` as your folder id (already set in `.env.example`).
+4. Make sure the folder/files are shared as public view.
+
+When the API key is not configured or fails, the gallery automatically uses local fallback images.

@@ -4,6 +4,9 @@ import { Row, Col, Card, Typography, Button, Space } from 'antd'
 const { Title, Text } = Typography
 
 export default function Contact() {
+  const b2bMessage = 'Olá, desejo conhecer mais sobre os produtos da bread king (B2B)'
+  const b2bWhatsappUrl = `https://wa.me/5541985268755?text=${encodeURIComponent(b2bMessage)}`
+
   return (
     <section
       id="contact"
@@ -21,11 +24,16 @@ export default function Contact() {
             <Card style={{ borderRadius: 12, height: '100%' }}>
               <Title level={4}>Quer se tornar um parceiro?</Title>
               <Text>Entre em contato com nosso time B2B e conheça todos os produtos da nossa linha</Text>
-              <div>
-
-              </div>
               <Space style={{ marginTop: 16 }}>
-                <Button type="primary" icon={<WhatsAppOutlined />}>Falar com o comercial</Button>
+                <Button
+                  type="primary"
+                  icon={<WhatsAppOutlined />}
+                  href={b2bWhatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Falar com o comercial
+                </Button>
               </Space>
             </Card>
           </Col>
