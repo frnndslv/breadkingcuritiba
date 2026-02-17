@@ -10,6 +10,7 @@ import InfoSeller from './views/InfoSeller.tsx'
 import InfoUltra from './views/InfoUltra.tsx'
 import Contact2 from './views/Contact2.tsx'
 import Videos from './views/Videos.tsx'
+import Ending from './views/Ending.tsx'
 
 const { Header, Content, Footer } = Layout
 const { Text } = Typography
@@ -90,6 +91,50 @@ function App() {
                 Contato
               </Menu.Item>
             </Menu>
+            <div className="bk-header-social" style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+              <a
+                href="https://www.facebook.com/profile.php?id=61572708503959"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  width: '40px',
+                  height: '40px',
+                  borderRadius: '8px',
+                  background: '#EBA82C',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: '#fff',
+                  fontSize: '20px',
+                  transition: 'transform 0.2s'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+              >
+                <FacebookOutlined />
+              </a>
+              <a
+                href="https://www.instagram.com/breadkingcuritiba/"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  width: '40px',
+                  height: '40px',
+                  borderRadius: '8px',
+                  background: '#EBA82C',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: '#fff',
+                  fontSize: '20px',
+                  transition: 'transform 0.2s'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+              >
+                <InstagramOutlined />
+              </a>
+            </div>
           </div>
         </Header>
 
@@ -106,6 +151,7 @@ function App() {
           <Stores />
           <WaveDivider color="#fffdf7" backgroundColor="#ffffff" />
           <Contact2 />
+          <Ending/>
         </Content>
 
         <Footer className="bk-footer">

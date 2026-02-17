@@ -107,6 +107,10 @@ html {
     display: none !important;
   }
 
+  .bk-header-social {
+    display: none !important;
+  }
+
   .bk-header {
     justify-content: center;
   }
