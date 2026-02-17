@@ -115,9 +115,17 @@ html {
     flex-direction: column !important;
     align-items: center !important;
     text-align: center;
+    margin-left: 0 !important;
+    justify-content: center !important;
   }
 
   .bk-footer > div > div {
     width: 100%;
+    align-items: center !important;
+    text-align: center;
+  }
+
+  .bk-footer a {
+    justify-content: center;
   }
 }

@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Row, Col, Typography, Card } from 'antd'
+import breadEsquerda from '../assets/cosmetics/bread-esquerda.png'
+import breadDireita from '../assets/cosmetics/bread-direita.png'
 
 const { Title, Paragraph } = Typography
 
@@ -90,7 +92,14 @@ export default function Gallery() {
   return (
     <section
       id="gallery"
-      style={{ padding: 'clamp(40px, 10vw, 80px) 20px', background: '#fff7eb' }}
+      style={{
+        padding: 'clamp(40px, 10vw, 80px) clamp(20px, 6vw, 120px)',
+        backgroundColor: '#ffffff',
+        backgroundImage: `url('${breadEsquerda}'), url('${breadDireita}')`,
+        backgroundPosition: 'left center, right center',
+        backgroundRepeat: 'no-repeat, no-repeat',
+        backgroundSize: 'clamp(80px, 14vw, 220px) auto, clamp(80px, 14vw, 220px) auto',
+      }}
     >
       <div style={{ maxWidth: 1200, margin: '0 auto', textAlign: 'center' }}>
         <Title

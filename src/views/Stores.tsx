@@ -2,6 +2,8 @@ import { useEffect, useMemo, useState } from 'react'
 import { Row, Col, Card, Typography, Button } from 'antd'
 import { WhatsAppOutlined } from '@ant-design/icons'
 import ifoodIcon from '../assets/icon/fast-food-outline.svg'
+import breadEsquerda from '../assets/cosmetics/bread-esquerda.png'
+import breadDireita from '../assets/cosmetics/bread-direita.png'
 
 const { Title, Paragraph, Text } = Typography
 
@@ -77,6 +79,7 @@ function StoreImageCarousel({ images, alt }: StoreImageCarouselProps) {
         height: '200px',
         objectFit: 'cover',
         borderRadius: '8px',
+        border: '1px solid #000000',
         marginBottom: '16px',
         opacity: isVisible ? 1 : 0,
         transition: 'opacity 0.5s ease',
@@ -89,21 +92,21 @@ export default function Stores() {
   const stores = [
     { 
       name: 'Batel', 
-      address: 'Gonçalves Dias, 763',
+      address: 'Rua Gonçalves Dias, 763',
       folder: 'batel',
       whatsapp: '5541991932266',
       ifood: 'https://www.ifood.com.br/delivery/curitiba-pr/bread-king---batel-batel/bfc92f45-f9d6-42f8-a702-d20b197bfe96'
     },
     { 
       name: 'Jardim Social', 
-      address: 'Fagundes Varela, 1487 ',
+      address: 'Rua Fagundes Varela, 1487 ',
       folder: 'jardimsocial',
       whatsapp: '5541991657559',
       ifood: 'https://www.ifood.com.br/delivery/curitiba-pr/bread-king---jardim-social-bacacheri/7c7eef45-8ad2-48d1-9608-e20272efb990'
     },
     { 
       name: 'Bom Retiro', 
-      address: 'Carlos Pili, 298',
+      address: 'Rua Carlos Pili, 298',
       folder: 'bomretiro',
       whatsapp: '5541985403720',
       ifood: 'https://www.ifood.com.br/delivery/curitiba-pr/bread-king---bom-retiro-bom-retiro/67679071-5947-4342-b0b5-031b8c942d6e'
@@ -113,18 +116,25 @@ export default function Stores() {
   return (
     <section
       id="stores"
-      style={{ padding: 'clamp(40px, 10vw, 80px) 20px', background: '#fff7eb' }}
+      style={{
+        padding: 'clamp(40px, 10vw, 80px) clamp(20px, 6vw, 120px)',
+        backgroundColor: '#ffffff',
+        backgroundImage: `url('${breadEsquerda}'), url('${breadDireita}')`,
+        backgroundPosition: 'left center, right center',
+        backgroundRepeat: 'no-repeat, no-repeat',
+        backgroundSize: 'clamp(80px, 14vw, 220px) auto, clamp(80px, 14vw, 220px) auto',
+      }}
     >
       <div style={{ maxWidth: 1200, margin: '0 auto' }}>
        
         <Title
           level={2}
-          style={{ textAlign: 'center', marginBottom: 'clamp(30px, 6vw, 50px)', color: '#B8172E' }}
+          style={{ textAlign: 'center', fontSize:'60px', marginBottom: 'clamp(30px, 6vw, 50px)', color: '#b70000' }}
         >
           Conheça nossas unidades
         </Title>
-        <Paragraph style={{ textAlign: 'center', color: '#5c5858', marginBottom: 32 }}>
-          Também contamos com atendimento online via WhatsApp e iFood!
+        <Paragraph style={{ textAlign: 'center', fontSize: '20px', maxWidth: '800px', margin: '0 auto 32px', color: '#b70000' }}>
+          Fique à vontade para visitar ou entrar em contato com nossas unidades atendimento presencial ou online, de segunda a sábado das 8 da manhã às 20 da noite
         </Paragraph>
         <Row gutter={[24, 24]}>
           {stores.map((store) => (
@@ -135,10 +145,10 @@ export default function Stores() {
                 const storeImages = storeImagesByFolder[store.folder] ?? []
 
                 return (
-              <Card style={{ borderRadius: 12, height: '100%' }}>
+              <Card style={{ borderRadius: 12, height: '100%', backgroundColor: '#e5a327', border: '3px solid #b70000' }}>
                 <StoreImageCarousel images={storeImages} alt={store.name} />
-                <Title level={4}>{store.name}</Title>
-                <Text type="secondary">{store.address}</Text>
+                <Title level={4} style={{ color: '#b70000' }}>{store.name}</Title>
+                <Text style={{ color: '#000000' }}>{store.address}</Text>
                 <div style={{ marginTop: 16, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                   <Button
                     type="primary"

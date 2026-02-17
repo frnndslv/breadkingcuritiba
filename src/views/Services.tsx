@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Row, Col, Card, Typography, Button, Tabs } from 'antd'
+import bakeryBg from '../assets/cosmetics/bakery_no_background.png'
 
 const { Title } = Typography
 
@@ -276,12 +277,19 @@ export default function Services() {
   return (
     <section
       id="services"
-      style={{ padding: 'clamp(40px, 10vw, 80px) 20px', background: '#fff' }}
+      style={{
+        padding: 'clamp(40px, 10vw, 80px) 20px',
+        backgroundColor: '#fffdf7',
+        backgroundImage: `linear-gradient(rgba(255, 253, 247, 0.9), rgba(255, 253, 247, 0.9)), url('${bakeryBg}')`,
+        backgroundRepeat: 'repeat, repeat',
+        backgroundPosition: 'center, top left',
+        backgroundSize: 'auto, clamp(220px, 18vw, 320px) auto',
+      }}
     >
       <div style={{ maxWidth: 1200, margin: '0 auto' }}>
         <Title
           level={2}
-          style={{ textAlign: 'center', marginBottom: 'clamp(16px, 4vw, 28px)', color: '#8b141f' }}
+          style={{ textAlign: 'center', fontSize:'70px',  marginBottom: 'clamp(16px, 4vw, 28px)', color: '#8b141f' }}
         >
           Produtos
         </Title>
@@ -303,7 +311,7 @@ export default function Services() {
           }}
           items={Object.entries(categories).map(([category]) => ({
             key: category,
-            label: category,
+            label: <span style={{ fontSize: '20px' }}>{category}</span>,
             children: (
               <>
                 <Row gutter={[18, 18]}>

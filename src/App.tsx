@@ -5,9 +5,11 @@ import Hero from './views/Hero.tsx'
 import Services from './views/Services.tsx'
 import Stores from './views/Stores.tsx'
 import About from './views/About.tsx'
-import Gallery from './views/Gallery.tsx'
-import Contact from './views/Contact.tsx'
 import WaveDivider from './components/WaveDivider.tsx'
+import InfoSeller from './views/InfoSeller.tsx'
+import InfoUltra from './views/InfoUltra.tsx'
+import Contact2 from './views/Contact2.tsx'
+import Videos from './views/Videos.tsx'
 
 const { Header, Content, Footer } = Layout
 const { Text } = Typography
@@ -28,6 +30,13 @@ function App() {
           colorPrimary: '#B8172E',
           colorText: '#1f1b1b',
           fontFamily: "'PT Sans', Tahoma, sans-serif",
+        },
+        components: {
+          Button: {
+            colorPrimary: '#A20100',
+            colorPrimaryHover: '#A20100',
+            colorPrimaryActive: '#A20100',
+          },
         },
       }}
     >
@@ -57,7 +66,8 @@ function App() {
                 flex: 1,
                 justifyContent: 'center',
                 display: 'flex',
-                marginRight: "100px"
+                marginRight: "100px",
+                fontSize: '21px',
               }}
               selectedKeys={[]}
             >
@@ -67,16 +77,16 @@ function App() {
               <Menu.Item key="about" onClick={() => scrollToSection('about')}>
                 Sobre
               </Menu.Item>
-              <Menu.Item key="stores" onClick={() => scrollToSection('stores')}>
-                Lojas
-              </Menu.Item>
               <Menu.Item key="services" onClick={() => scrollToSection('services')}>
                 Produtos
               </Menu.Item>
-              <Menu.Item key="gallery" onClick={() => scrollToSection('gallery')}>
-                Novidades
+              <Menu.Item key="videos" onClick={() => scrollToSection('videos')}>
+                Videos
               </Menu.Item>
-              <Menu.Item key="contact" onClick={() => scrollToSection('contact')}>
+              <Menu.Item key="stores" onClick={() => scrollToSection('stores')}>
+                Lojas
+              </Menu.Item>
+              <Menu.Item key="contact" onClick={() => scrollToSection('contact2')}>
                 Contato
               </Menu.Item>
             </Menu>
@@ -85,17 +95,17 @@ function App() {
 
         <Content style={{ marginTop: 90 }}>
           <Hero
-            onReserveClick={() => scrollToSection('contact')}
+            onReserveClick={() => scrollToSection('contact2')}
           />
+          <InfoSeller/>
           <About />
-          <WaveDivider color="#fff7eb" backgroundColor="#fff" flip />
-          <Stores />
-          <WaveDivider color="#ffffff" backgroundColor="#fff7eb" />
+          <InfoUltra/>
           <Services />
-          <WaveDivider color="#fff7eb" backgroundColor="#ffffff" flip />
-          <Gallery />
-          <WaveDivider color="#ffffff" backgroundColor="#fff7eb" />
-          <Contact />
+          <Videos />
+          <WaveDivider color="#ffffff" backgroundColor="#fffdf7" flip />
+          <Stores />
+          <WaveDivider color="#fffdf7" backgroundColor="#ffffff" />
+          <Contact2 />
         </Content>
 
         <Footer className="bk-footer">
