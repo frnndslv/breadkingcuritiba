@@ -106,7 +106,7 @@ export default function Stores() {
     },
     { 
       name: 'Bom Retiro', 
-      address: 'Rua Carlos Pili, 298',
+      address: 'Rua Carlos Pioli, 298',
       folder: 'bomretiro',
       whatsapp: '5541985403720',
       ifood: 'https://www.ifood.com.br/delivery/curitiba-pr/bread-king---bom-retiro-bom-retiro/67679071-5947-4342-b0b5-031b8c942d6e'
@@ -148,7 +148,7 @@ export default function Stores() {
               <Card style={{ borderRadius: 12, height: '100%', backgroundColor: '#e5a327', border: '3px solid #b70000' }}>
                 <StoreImageCarousel images={storeImages} alt={store.name} />
                 <Title level={4} style={{ color: '#b70000' }}>{store.name}</Title>
-                <Text style={{ color: '#000000' }}>{store.address}</Text>
+                <Text style={{ color: '#b70000' }}>{store.address}</Text>
                 <div style={{ marginTop: 16, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                   <Button
                     type="primary"

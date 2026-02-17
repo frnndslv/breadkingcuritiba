@@ -22,37 +22,45 @@ const HERO_IMAGES = [
 
 export default function Hero({ onReserveClick }: HeroProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
-  const [isVisible, setIsVisible] = useState(true)
+  const [nextImageIndex, setNextImageIndex] = useState<number | null>(null)
+  const [isCrossfading, setIsCrossfading] = useState(false)
 
   const b2bMessage = 'Olá, desejo conhecer mais sobre os produtos da bread king (B2B)'
   const b2bWhatsappUrl = `https://wa.me/5541985268755?text=${encodeURIComponent(b2bMessage)}`
 
   const currentImage = HERO_IMAGES[currentImageIndex] ?? HERO_IMAGES[0]
+  const nextImage = nextImageIndex !== null ? (HERO_IMAGES[nextImageIndex] ?? HERO_IMAGES[0]) : null
 
   useEffect(() => {
     if (HERO_IMAGES.length <= 1) {
       return
     }
 
-    let swapTimeout: number | undefined
+    let crossfadeTimeout: number | undefined
 
     const intervalId = window.setInterval(() => {
-      setIsVisible(false)
+      const nextIndex = (currentImageIndex + 1) % HERO_IMAGES.length
+      setNextImageIndex(nextIndex)
 
-      swapTimeout = window.setTimeout(() => {
-        setCurrentImageIndex((previousIndex) => (previousIndex + 1) % HERO_IMAGES.length)
-        setIsVisible(true)
-      }, 250)
+      window.requestAnimationFrame(() => {
+        setIsCrossfading(true)
+      })
+
+      crossfadeTimeout = window.setTimeout(() => {
+        setCurrentImageIndex(nextIndex)
+        setNextImageIndex(null)
+        setIsCrossfading(false)
+      }, 650)
     }, 3500)
 
     return () => {
       window.clearInterval(intervalId)
 
-      if (swapTimeout) {
-        window.clearTimeout(swapTimeout)
+      if (crossfadeTimeout) {
+        window.clearTimeout(crossfadeTimeout)
       }
     }
-  }, [])
+  }, [currentImageIndex])
 
   return (
     <section
@@ -75,11 +83,24 @@ export default function Hero({ onReserveClick }: HeroProps) {
           backgroundImage: `url('${currentImage}')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          opacity: isVisible ? 1 : 0,
-          transition: 'opacity 0.5s ease',
+          opacity: 1,
           zIndex: 0,
         }}
       />
+      {nextImage && (
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            backgroundImage: `url('${nextImage}')`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            opacity: isCrossfading ? 1 : 0,
+            transition: 'opacity 0.65s ease-in-out',
+            zIndex: 0,
+          }}
+        />
+      )}
       <div
         style={{
           position: 'absolute',
@@ -88,10 +109,10 @@ export default function Hero({ onReserveClick }: HeroProps) {
           width: '100%',
           height: '100%',
           backgroundColor: 'rgba(33, 58, 54, 0.6)',
-          zIndex: 1,
+          zIndex: 0,
         }}
       />
-      <div style={{ position: 'relative', zIndex: 2 }}>
+      <div style={{ position: 'relative', zIndex: 1 }}>
         <Title
           style={{
             color: '#ffffff',

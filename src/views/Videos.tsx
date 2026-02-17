@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from 'react'
-import { Row, Col, Card, Typography, Button } from 'antd'
+import { useEffect, useRef, useState } from 'react'
+import { Card, Typography } from 'antd'
 import bakeryBg from '../assets/cosmetics/bakery_no_background.png'
 
 const { Title, Paragraph } = Typography
@@ -8,10 +8,6 @@ type VideoModule = {
   default: string
 }
 
-type VideoItem = {
-  title: string
-  src: string
-}
 
 const videoModules = import.meta.glob<VideoModule>('../assets/videoPrepareEmCasa/*.{mp4,webm,mov,m4v}', {
   eager: true,
@@ -59,48 +55,50 @@ const videos = Object.entries(videoModules)
   })
   .sort((left, right) => left.title.localeCompare(right.title))
 
-function chunkVideos(list: VideoItem[], chunkSize: number) {
-  const chunks: VideoItem[][] = []
-
-  for (let index = 0; index < list.length; index += chunkSize) {
-    chunks.push(list.slice(index, index + chunkSize))
-  }
-
-  return chunks
-}
-
 export default function Videos() {
   const [activeVideoIndex, setActiveVideoIndex] = useState(0)
-  const [currentSlide, setCurrentSlide] = useState(0)
-  const [itemsPerSlide, setItemsPerSlide] = useState(3)
+  const [isCompactLayout, setIsCompactLayout] = useState(false)
+  const [playerHeight, setPlayerHeight] = useState(0)
+  const playerWrapperRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
-    const updateItemsPerSlide = () => {
-      if (window.innerWidth < 768) {
-        setItemsPerSlide(1)
-        return
-      }
-
-      if (window.innerWidth < 1100) {
-        setItemsPerSlide(2)
-        return
-      }
-
-      setItemsPerSlide(3)
+    const syncLayout = () => {
+      setIsCompactLayout(window.innerWidth < 1100)
     }
 
-    updateItemsPerSlide()
-    window.addEventListener('resize', updateItemsPerSlide)
+    syncLayout()
+    window.addEventListener('resize', syncLayout)
 
     return () => {
-      window.removeEventListener('resize', updateItemsPerSlide)
+      window.removeEventListener('resize', syncLayout)
     }
   }, [])
 
+  useEffect(() => {
+    const wrapperElement = playerWrapperRef.current
+
+    if (!wrapperElement) {
+      return
+    }
+
+    const updateHeight = () => {
+      setPlayerHeight(wrapperElement.offsetHeight)
+    }
+
+    updateHeight()
+
+    const observer = new ResizeObserver(() => {
+      updateHeight()
+    })
+
+    observer.observe(wrapperElement)
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [activeVideoIndex, isCompactLayout])
+
   const activeVideo = videos[activeVideoIndex] ?? videos[0]
-  const videoSlides = useMemo(() => chunkVideos(videos, itemsPerSlide), [itemsPerSlide])
-  const totalSlides = videoSlides.length
-  const visibleSlide = videoSlides[currentSlide] ?? []
 
   return (
     <section
@@ -134,80 +132,82 @@ export default function Videos() {
         </Paragraph>
 
         {activeVideo ? (
-          <Card
+          <div
             style={{
-              borderRadius: 16,
-              border: '1px solid rgba(162, 1, 0, 0.2)',
-              marginBottom: 28,
-              overflow: 'hidden',
+              display: 'grid',
+              gridTemplateColumns: isCompactLayout ? 'minmax(0, 1fr)' : 'minmax(0, 2fr) minmax(280px, 1fr)',
+              gap: 18,
+              alignItems: 'start',
             }}
-            bodyStyle={{ padding: 0 }}
           >
-            <video
-              key={activeVideo.src}
-              src={activeVideo.src}
-              controls
-              playsInline
-              preload="metadata"
-              style={{
-                width: '100%',
-                maxHeight: 'min(72vh, 680px)',
-                display: 'block',
-                background: '#000',
-              }}
-            />
-          </Card>
-        ) : (
-          <Paragraph style={{ textAlign: 'center', color: '#b70000' }}>
-            Nenhum vídeo encontrado em `assets/videoPrepareEmCasa`.
-          </Paragraph>
-        )}
-
-        {videos.length > 0 && (
-          <>
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                gap: 12,
-                marginBottom: 16,
-              }}
-            >
-              <Button
-                onClick={() => setCurrentSlide((previous) => Math.max(0, previous - 1))}
-                disabled={currentSlide === 0}
+            <div ref={playerWrapperRef}>
+              <Card
+                style={{
+                  borderRadius: 16,
+                  border: '1px solid rgba(162, 1, 0, 0.2)',
+                  overflow: 'hidden',
+                }}
+                bodyStyle={{ padding: 0 }}
               >
-                Anterior
-              </Button>
-              <span style={{ color: '#b70000', fontWeight: 700 }}>
-                {totalSlides === 0 ? 0 : currentSlide + 1} / {totalSlides}
-              </span>
-              <Button
-                onClick={() => setCurrentSlide((previous) => Math.min(totalSlides - 1, previous + 1))}
-                disabled={currentSlide >= totalSlides - 1}
-              >
-                Próximo
-              </Button>
+                <video
+                  key={activeVideo.src}
+                  src={activeVideo.src}
+                  controls
+                  playsInline
+                  preload="metadata"
+                  style={{
+                    width: '100%',
+                    aspectRatio: '16 / 9',
+                    display: 'block',
+                    background: '#000',
+                  }}
+                />
+                <div style={{ padding: '14px 16px' }}>
+                  <Title level={4} style={{ margin: 0, color: '#7d1a1a' }}>
+                    {activeVideo.title}
+                  </Title>
+                </div>
+              </Card>
             </div>
 
-            <Row gutter={[16, 16]}>
-              {visibleSlide.map((videoItem) => {
-                const currentIndex = videos.findIndex((entry) => entry.src === videoItem.src)
-                const isSelected = currentIndex === activeVideoIndex
+            <Card
+              style={{
+                borderRadius: 16,
+                border: '1px solid rgba(162, 1, 0, 0.2)',
+                overflow: 'hidden',
+                height: !isCompactLayout && playerHeight > 0 ? playerHeight : 'auto',
+              }}
+              bodyStyle={{ padding: 10, height: '100%', display: 'flex' }}
+            >
+              <div
+                style={{
+                  flex: 1,
+                  minHeight: 0,
+                  overflowY: 'auto',
+                  paddingRight: 4,
+                }}
+              >
+                {videos.map((videoItem, index) => {
+                  const isSelected = index === activeVideoIndex
 
-                return (
-                  <Col key={videoItem.src} xs={24} sm={12} md={itemsPerSlide === 3 ? 8 : 12}>
-                    <Card
-                      hoverable
+                  return (
+                    <button
+                      key={videoItem.src}
+                      type="button"
+                      onClick={() => setActiveVideoIndex(index)}
                       style={{
-                        borderRadius: 14,
-                        border: isSelected
-                          ? '2px solid #A20100'
-                          : '1px solid rgba(162, 1, 0, 0.15)',
+                        width: '100%',
+                        display: 'grid',
+                        gridTemplateColumns: '124px minmax(0, 1fr)',
+                        gap: 10,
+                        border: isSelected ? '2px solid #A20100' : '1px solid rgba(162, 1, 0, 0.15)',
+                        borderRadius: 12,
+                        background: isSelected ? 'rgba(162, 1, 0, 0.08)' : '#fff',
+                        padding: 8,
+                        marginBottom: 10,
+                        cursor: 'pointer',
+                        textAlign: 'left',
                       }}
-                      bodyStyle={{ padding: 12 }}
-                      onClick={() => setActiveVideoIndex(currentIndex)}
                     >
                       <video
                         src={videoItem.src}
@@ -218,26 +218,32 @@ export default function Videos() {
                           width: '100%',
                           aspectRatio: '16 / 9',
                           objectFit: 'cover',
-                          borderRadius: 10,
+                          borderRadius: 8,
                           background: '#111',
                         }}
                       />
-                      <Paragraph
+                      <div
                         style={{
-                          margin: '10px 0 0',
                           color: '#7d1a1a',
-                          textAlign: 'center',
                           fontWeight: 700,
+                          lineHeight: 1.3,
+                          alignSelf: 'center',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
                         }}
                       >
                         {videoItem.title}
-                      </Paragraph>
-                    </Card>
-                  </Col>
-                )
-              })}
-            </Row>
-          </>
+                      </div>
+                    </button>
+                  )
+                })}
+              </div>
+            </Card>
+          </div>
+        ) : (
+          <Paragraph style={{ textAlign: 'center', color: '#b70000' }}>
+            Nenhum vídeo encontrado em `assets/videoPrepareEmCasa`.
+          </Paragraph>
         )}
       </div>
     </section>
